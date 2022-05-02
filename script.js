@@ -1,45 +1,18 @@
 // A single-player console rock-paper-scissors game
 
+"use strict";
+
 const MIN = 0;
 const MAX = 2;
 const GAMES = 5;
 
-let wins = 0;
-let ties = 0;
-let losses = 0;
+
+// Play a 5-round game a record the result
+// Main function
+let total = game();
+displayGame(total);
 
 
-"use strict";
-
-// Prompt user for input
-
-// Validate user input
-
-// Randomly determine computer selection
-    // Randomly generate an integer between 0 and 2
-
-// Compare user and computer selections
-
-// Record and display result
-
-// Repeat until five rounds are complete
-
-
-
-/* TODO: test and connect the validate input function
-    figure out why only one game is played
-    keep track of score
-    output final result
-*/
-
-
-game();
-
-
-// Randomly generate an integer to use for computer selection
-function getRandomInt(minInt, maxInt) {
-    return Math.floor(Math.random() * (maxInt - minInt + 1) + minInt);
-}
 
 // Randomly determine computer selection
 function computerPlay() {
@@ -55,6 +28,11 @@ function computerPlay() {
     }
 }
 
+// Randomly generate an integer to use for computer selection
+function getRandomInt(minInt, maxInt) {
+    return Math.floor(Math.random() * (maxInt - minInt + 1) + minInt);
+}
+
 // Play a round of RPS
 function playRound(playerSelection, computerSelection) {
     let cpuMove = computerPlay();   // Determine the CPU's move
@@ -63,13 +41,13 @@ function playRound(playerSelection, computerSelection) {
             switch (computerSelection) {
                 case "Rock" :
                     console.log("Tie! Rock vs. Rock");
-                    return "tie";
+                    return("tie");
                 case "Paper" :
                     console.log("You Lose! Rock vs. Paper");
-                    return "loss";
+                    return("loss");
                 case "Scissors" :
                     console.log("You Win! Rock vs. Scissors");
-                    return "win";
+                    return("win");
                 default :
                     alert("Error: playRound failed");
             }
@@ -77,13 +55,13 @@ function playRound(playerSelection, computerSelection) {
             switch(computerSelection) {
                 case "Rock" :
                     console.log("You Win! Paper vs. Rock");
-                    return "win";
+                    return("win");
                 case "Paper" :
                     console.log("Tie! Paper vs. Rock");
-                    return "tie";
+                    return("tie");
                 case "Scissors" :
                     console.log("You Lose! Paper vs. Scissors")
-                    return "loss";
+                    return("loss");
                 default :
                     alert("Error: playRound failed");
             }
@@ -91,13 +69,13 @@ function playRound(playerSelection, computerSelection) {
             switch(computerSelection) {
                 case "Rock" :
                     console.log("You Lose! Scissors vs. Rock");
-                    return "loss";
+                    return("loss");
                 case "Paper" :
                     console.log("You Win! Scissors vs. Paper");
-                    return "win";
+                    return("win");
                 case "Scissors" :
                     console.log("Tie! Scissors vs. Paper");
-                    return "tie";
+                    return("tie");
                 default :
                     alert("Error: playRound failed");
             }
@@ -106,26 +84,31 @@ function playRound(playerSelection, computerSelection) {
 
 // Play a 5-round game of RPS
 function game() {
+    let wins = 0;
+    let ties = 0;
+    let losses = 0;
     for (let i = 0; i < GAMES; i++){
         let uInput = prompt("Enter your move: ");
         let cpuMove = computerPlay();
         let result = playRound(uInput, cpuMove);
         if (result === "win") {
-            return "w";
+            wins++;
         } else if (result === "tie") {
-            return "t";
+            ties++;
         } else if (result === "loss") {
-            return "l";
+            losses++;
         } else {
             alert("Error: game failed");
         }
     }
+    return (wins-losses);
 }
 
-// Validate user input for move
+// Inform user of correct usage if their input is invalid
 function validateInput(word) {
     let lowerWord = word.toLowerCase();
-    while (lowerWord = "") {
+    // Check for valid input
+    if (lowerWord != "r" || lowerWord != "p" || lowerWord != "s") {
         if (lowerWord === "rock" || lowerWord === "r") {
             return "r";
         }
@@ -135,6 +118,20 @@ function validateInput(word) {
         if (lowerWord === "scissors" || lowerWord === "s") {
             return "s";
         }
+        // If input is invalid, display correct usage
         alert("Usage: rock/r OR paper/p OR scissors/s");
+    }
+}
+
+// Display the results of a 5-round game
+function displayGame(score) {
+    if (score < 0) {
+        console.log("CPU Wins the Match!");
+    } else if (score === 0) {
+        console.log("The Match is a Draw!");
+    } else if (score > 0) {
+        console.log("Player Wins!");
+    } else {
+        alert("Error: displayGame failed");
     }
 }
