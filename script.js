@@ -177,6 +177,7 @@ function rockPress (e) {
         playerLosses++;
     }
     updateDisplay();
+    checkScore();
 }
 
 function paperPress (e) {
@@ -188,6 +189,7 @@ function paperPress (e) {
         playerLosses++;
     }
     updateDisplay();
+    checkScore();
 }
 
 function scissorsPress (e) {
@@ -199,9 +201,24 @@ function scissorsPress (e) {
         playerLosses++;
     }
     updateDisplay();
+    checkScore();
 }
 
 function updateDisplay () {
-    display.textContent = `Player score: ${playerWins}, Computerscore: ${playerLosses}`;
+    display.textContent = `Player score: ${playerWins}, Computer score: ${playerLosses}`;
     results.appendChild(display);
+}
+
+function checkScore () {
+    if (playerWins >= 5) {
+        alert("User wins!");
+        playerWins = 0;
+        playerLosses = 0;
+    }
+    
+    if (playerLosses >= 5) {
+        alert("CPU wins!");
+        playerWins = 0;
+        playerLosses = 0;
+    }
 }
