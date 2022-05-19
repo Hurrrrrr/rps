@@ -1,16 +1,35 @@
-// A single-player console rock-paper-scissors game
+// A single-player rock-paper-scissors game
+// Version 2.0: Replaced console input with buttons 
 
 "use strict";
 
 const MIN = 0;
 const MAX = 2;
-const GAMES = 5;
+const GAMES = 1;
+
+let playerWins = 0;
+let playerLosses = 0;
+
+let result = "";
+
+// Button
+const rockButton = document.querySelector('#rockButton');
+rockButton.addEventListener('click', rockPress);
+
+const paperButton = document.querySelector('#paperButton');
+paperButton.addEventListener('click', paperPress);
+
+const scissorsButton = document.querySelector('#scissorsButton');
+scissorsButton.addEventListener('click', scissorsPress);
+
+// Results display
+const results = document.querySelector('#results');
+
+const display = document.createElement('div');
 
 
-// Play a 5-round game a record the result
-// Main function
-let total = game();
-displayGame(total);
+// Main Function
+
 
 
 
@@ -134,4 +153,55 @@ function displayGame(score) {
     } else {
         alert("Error: displayGame failed");
     }
+}
+
+function voteRock() {
+    return playRound("r", computerPlay());
+}
+
+function votePaper() {
+    return playRound("p", computerPlay());
+}
+
+function voteScissors() {
+    return playRound("s", computerPlay());
+}
+
+// Call functions when the player presses the button
+function rockPress (e) {
+    let result = voteRock();
+    if (result === "win") {
+        playerWins++;
+
+    } else if (result === "loss") {
+        playerLosses++;
+    }
+    updateDisplay();
+}
+
+function paperPress (e) {
+    let result = votePaper();
+    if (result === "win") {
+        playerWins++;
+
+    } else if (result === "loss") {
+        playerLosses++;
+    }
+    updateDisplay();
+}
+
+function scissorsPress (e) {
+    let result = voteScissors();
+    if (result === "win") {
+        playerWins++;
+
+    } else if (result === "loss") {
+        playerLosses++;
+    }
+    updateDisplay();
+}
+
+function updateDisplay () {
+    display.textContent = `Player score: ${playerWins}, Computerscore: ${playerLosses}`;
+    results.appendChild(display);
 }
